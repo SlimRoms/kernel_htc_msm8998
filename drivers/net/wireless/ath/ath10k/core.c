@@ -108,6 +108,7 @@ static const struct ath10k_hw_params ath10k_hw_params_list[] = {
 			.board_size = QCA9887_BOARD_DATA_SZ,
 			.board_ext_size = QCA9887_BOARD_EXT_DATA_SZ,
 		},
+		.hw_ops = &qca988x_ops,
 	},
 	{
 		.id = QCA6174_HW_2_1_VERSION,
