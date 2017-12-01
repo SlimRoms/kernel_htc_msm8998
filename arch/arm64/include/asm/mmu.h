@@ -21,6 +21,9 @@
 #include <asm/cpufeature.h>
 #include <asm/percpu.h>
 
+#define USER_ASID_FLAG	(UL(1) << 48)
+#define TTBR_ASID_MASK	(UL(0xffff) << 48)
+
 #ifndef __ASSEMBLY__
 
 typedef struct {
