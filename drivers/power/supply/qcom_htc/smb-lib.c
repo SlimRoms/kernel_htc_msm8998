@@ -4774,13 +4774,18 @@ static void smblib_handle_typec_cc_state_change(struct smb_charger *chg)
 		smblib_dbg(chg, PR_MISC, "TypeC %s insertion\n",
 			smblib_typec_mode_name[chg->typec_mode]);
 		smblib_handle_typec_insertion(chg);
+#ifdef CONFIG_NANOHUB_EDGE
+
 		nanohub_vbus_status(chg->typec_mode);
+#endif
 	} else if (chg->typec_present &&
 				chg->typec_mode == POWER_SUPPLY_TYPEC_NONE) {
 		chg->typec_present = false;
 		smblib_dbg(chg, PR_MISC, "TypeC removal\n");
 		smblib_handle_typec_removal(chg);
+#ifdef CONFIG_NANOHUB_EDGE
 		nanohub_vbus_status(chg->typec_mode);
+#endif
 	}
 
 #ifdef CONFIG_HTC_BATT

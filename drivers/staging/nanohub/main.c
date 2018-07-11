@@ -2573,7 +2573,9 @@ struct iio_dev *nanohub_probe(struct device *dev, struct iio_dev *iio_dev)
 		goto fail_init_wq;
 	}
 	INIT_WORK(&data->work_restore, nanohub_restore_wq);
+#ifdef CONFIG_NANOHUB_EDGE
 	INIT_WORK(&data->work_vbus, nanohub_vbus_wq);
+#endif
 #ifdef CONFIG_NANOHUB_FLASH_GPIO_CONTROL
 	data->flash_gpio_control = 0;
 #endif
