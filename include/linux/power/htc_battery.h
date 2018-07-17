@@ -9,6 +9,8 @@
 #include <linux/of_gpio.h>
 #include <linux/gpio.h>
 
+#ifdef CONFIG_HTC_SPAM
+
 #define BATT_LOG(x...) do { \
 printk(KERN_INFO "[BATT] " x); \
 } while (0)
@@ -16,6 +18,13 @@ printk(KERN_INFO "[BATT] " x); \
 #define BATT_DUMP(x...) do { \
 	printk(KERN_ERR "[BATT][DUMP] " x); \
 } while (0)
+
+#else
+
+#define BATT_LOG(x...)
+#define BATT_DUMP(x...)
+
+#endif
 
 #define BATT_ERR(x...) do { \
 struct timespec ts; \
@@ -28,6 +37,8 @@ ktime_to_ns(ktime_get()), tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, \
 tm.tm_hour, tm.tm_min, tm.tm_sec, ts.tv_nsec); \
 } while (0)
 
+#ifdef CONFIG_HTC_SPAM
+
 #define BATT_EMBEDDED(x...) do { \
 struct timespec ts; \
 struct rtc_time tm; \
@@ -38,6 +49,12 @@ printk(" at %lld (%d-%02d-%02d %02d:%02d:%02d.%09lu UTC)\n", \
 ktime_to_ns(ktime_get()), tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, \
 tm.tm_hour, tm.tm_min, tm.tm_sec, ts.tv_nsec); \
 } while (0)
+
+#else
+
+#define BATT_EMBEDDED(x...)
+
+#endif 
 
 #define POWER_MONITOR_BATT_CAPACITY	77
 #define POWER_MONITOR_BATT_TEMP	330

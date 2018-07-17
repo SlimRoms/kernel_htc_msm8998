@@ -59,6 +59,7 @@ enum fbsp_state {
 	MAX_FBSP_STATE
 };
 
+#ifdef CONFIG_HTC_SPAM
 static char fbsp_state[MAX_FBSP_STATE][50] = {
 	[FBSP_INCORRECT_OP_MODE] = "incorrect operation mode",
 	[FBSP_INACTIVE] = "port not started",
@@ -67,6 +68,7 @@ static char fbsp_state[MAX_FBSP_STATE][50] = {
 	[FBSP_SUCCESS] = "success",
 	[FBSP_FAILED] = "failed"
 };
+#endif
 
 enum {
 	USE_CALIBRATED_R0TO,

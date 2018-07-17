@@ -3850,7 +3850,9 @@ static int msm_audrx_init(struct snd_soc_pcm_runtime *rtd)
 	void *config_data;
 	struct snd_soc_codec *codec = rtd->codec;
 	struct snd_soc_dapm_context *dapm = snd_soc_codec_get_dapm(codec);
+#ifdef CONFIG_HTC_SPAM
 	struct snd_soc_dai *cpu_dai = rtd->cpu_dai;
+#endif
 	struct snd_soc_dai *codec_dai = rtd->codec_dai;
 	struct snd_soc_pcm_runtime *rtd_aux = rtd->card->rtd_aux;
 	struct snd_card *card;
@@ -4249,7 +4251,9 @@ static int msm_snd_cpe_hw_params(struct snd_pcm_substream *substream,
 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
 	struct snd_soc_dai *codec_dai = rtd->codec_dai;
 	struct snd_soc_dai *cpu_dai = rtd->cpu_dai;
+#ifdef CONFIG_HTC_SPAM
 	struct snd_soc_dai_link *dai_link = rtd->dai_link;
+#endif
 
 	int ret = 0;
 	u32 tx_ch[SLIM_MAX_TX_PORTS];
@@ -4275,8 +4279,10 @@ static int msm_snd_cpe_hw_params(struct snd_pcm_substream *substream,
 
 	user_set_tx_ch = tx_ch_cnt;
 
+#ifdef CONFIG_HTC_SPAM
 	pr_debug("%s: tx_ch_cnt(%d) be_id %d\n",
 		 __func__, tx_ch_cnt, dai_link->be_id);
+#endif
 
 	ret = snd_soc_dai_set_channel_map(cpu_dai,
 					  user_set_tx_ch, tx_ch, 0, 0);
