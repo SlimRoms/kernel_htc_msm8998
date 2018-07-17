@@ -210,6 +210,7 @@ static void wcd_enable_curr_micbias(const struct wcd_mbhc *mbhc,
 	pr_debug("%s: exit\n", __func__);
 }
 
+#ifdef CONFIG_HTC_SPAM
 static const char *wcd_mbhc_get_event_string(int event)
 {
 	switch (event) {
@@ -250,6 +251,7 @@ static const char *wcd_mbhc_get_event_string(int event)
 		return WCD_MBHC_STRINGIFY(WCD_EVENT_INVALID);
 	}
 }
+#endif
 
 static int wcd_event_notify(struct notifier_block *self, unsigned long val,
 			    void *data)
@@ -261,8 +263,11 @@ static int wcd_event_notify(struct notifier_block *self, unsigned long val,
 	bool micbias1 = false;
 	u8 fsm_en = 0;
 
+#ifdef CONFIG_HTC_SPAM
 	pr_debug("%s: event %s (%d)\n", __func__,
 		 wcd_mbhc_get_event_string(event), event);
+#endif
+
 	if (mbhc->mbhc_cb->micbias_enable_status) {
 		micbias2 = mbhc->mbhc_cb->micbias_enable_status(mbhc,
 								MIC_BIAS_2);
