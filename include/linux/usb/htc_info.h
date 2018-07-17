@@ -25,6 +25,8 @@
 #undef info
 #endif
 
+#ifdef CONFIG_HTC_SPAM
+
 #define USB_ERR(fmt, args...) \
 	printk(KERN_ERR "[USB:ERR] " fmt, ## args)
 #define USB_WARNING(fmt, args...) \
@@ -33,6 +35,15 @@
 	printk(KERN_INFO "[USB] " fmt, ## args)
 #define USB_DEBUG(fmt, args...) \
 	printk(KERN_DEBUG "[USB] " fmt, ## args)
+
+#else
+
+#define USB_ERR(fmt, args...)
+#define USB_WARNING(fmt, args...)
+#define USB_INFO(fmt, args...)
+#define USB_DEBUG(fmt, args...)
+
+#endif
 
 /*#ifdef pr_debug
 #undef pr_debug

@@ -328,8 +328,9 @@ int mdss_backlight_trans(int val, struct mdss_panel_info *panel_info, bool brigh
 			}
 		}
 	}
-
+#ifdef CONFIG_HTC_SPAM
 	pr_info("mode=%d, apply_cali=%d, %d => %d\n", brightness_to_bl, brt_bl_table->apply_cali, val, result);
+#endif
 	return result;
 }
 

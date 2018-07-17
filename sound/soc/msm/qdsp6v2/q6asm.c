@@ -9156,35 +9156,45 @@ static int __q6asm_cmd(struct audio_client *ac, int cmd, uint32_t stream_id)
 	switch (cmd) {
 	case CMD_PAUSE:
 /* HTC_AUD_START */
+#ifdef CONFIG_HTC_SPAM
 		pr_info("%s:q6asm CMD_PAUSE session %d\n", __func__,ac->session);
+#endif
 /* HTC_AUD_END */
 		hdr.opcode = ASM_SESSION_CMD_PAUSE;
 		state = &ac->cmd_state;
 		break;
 	case CMD_SUSPEND:
 /* HTC_AUD_START */
+#ifdef CONFIG_HTC_SPAM
 		pr_info("%s:q6asm CMD_SUSPEND session %d\n", __func__,ac->session);
+#endif
 /* HTC_AUD_END */
 		hdr.opcode = ASM_SESSION_CMD_SUSPEND;
 		state = &ac->cmd_state;
 		break;
 	case CMD_FLUSH:
 /* HTC_AUD_START */
+#ifdef CONFIG_HTC_SPAM
 		pr_info("%s:q6asm CMD_FLUSH session %d\n", __func__,ac->session);
+#endif
 /* HTC_AUD_END */
 		hdr.opcode = ASM_STREAM_CMD_FLUSH;
 		state = &ac->cmd_state;
 		break;
 	case CMD_OUT_FLUSH:
 /* HTC_AUD_START */
+#ifdef CONFIG_HTC_SPAM
 		pr_info("%s: CMD_OUT_FLUSH\n", __func__);
+#endif
 /* HTC_AUD_END */
 		hdr.opcode = ASM_STREAM_CMD_FLUSH_READBUFS;
 		state = &ac->cmd_state;
 		break;
 	case CMD_EOS:
 /* HTC_AUD_START */
+#ifdef CONFIG_HTC_SPAM
 		pr_info("%s:q6asm session %d send EOS \n", __func__,ac->session);
+#endif
 /* HTC_AUD_END */
 		hdr.opcode = ASM_DATA_CMD_EOS;
 		atomic_set(&ac->cmd_state, 0);
@@ -9192,7 +9202,9 @@ static int __q6asm_cmd(struct audio_client *ac, int cmd, uint32_t stream_id)
 		break;
 	case CMD_CLOSE:
 /* HTC_AUD_START */
+#ifdef CONFIG_HTC_SPAM
 		pr_info("%s:q6asm close session %d\n", __func__,ac->session);
+#endif
 /* HTC_AUD_END */
 		hdr.opcode = ASM_STREAM_CMD_CLOSE;
 		state = &ac->cmd_state;

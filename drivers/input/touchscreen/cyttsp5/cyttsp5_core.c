@@ -209,12 +209,14 @@ void htc_cyttsp5_drv_pm_ops(int is_lcm_suspend)
 		}
 		else if(is_lcm_suspend == 1 && cd->cpdata) {
 			atomic_set(&cd->cpdata->tp_power_state, eTP_POWER_OFF_DOING);
+#ifdef CONFIG_HTC_SPAM
 			if(cd) {
 				struct cyttsp5_cydata *cydata = &cd->sysinfo.cydata;
 				pr_info("FW: v%d.%d.%d , Conf: %#x""\n",
 					cydata->fw_ver_major, cydata->fw_ver_minor,
 					cydata->revctrl, cydata->fw_ver_conf);
 			}
+#endif
 			if(cd) {
 				cd->startup_retry_count = 0;
 				call_atten_cb(cd, CY_ATTEN_SUSPEND, 0);

@@ -35,12 +35,21 @@
 #include <linux/vibtrig.h>
 #include <linux/spinlock.h>
 
+#ifdef CONFIG_HTC_SPAM
+
 #define VIB_DBG_LOG(fmt, ...) \
 		printk(KERN_DEBUG "[VIB][DBG] " fmt, ##__VA_ARGS__)
 #define VIB_INFO_LOG(fmt, ...) \
 		printk(KERN_INFO "[VIB] " fmt, ##__VA_ARGS__)
 #define VIB_ERR_LOG(fmt, ...) \
 		printk(KERN_ERR "[VIB][ERR] " fmt, ##__VA_ARGS__)
+#else
+
+#define VIB_DBG_LOG(fmt, ...)
+#define VIB_INFO_LOG(fmt, ...)
+#define VIB_ERR_LOG(fmt, ...)
+
+#endif
 
 #define QPNP_HAP_STATUS(b)		(b + 0x0A)
 #define QPNP_HAP_LRA_AUTO_RES_LO(b)	(b + 0x0B)

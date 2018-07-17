@@ -195,12 +195,20 @@ enum {
 };
 #endif //CONFIG_HTC_BATT_PCN0021
 
+#ifdef CONFIG_HTC_SPAM
+
 #define BATT_DEBUG(x...) do { \
 	if (g_flag_enable_batt_debug_log) \
 		printk(KERN_INFO"[BATT] " x); \
 	else	\
 		printk(KERN_DEBUG"[BATT] " x); \
 } while (0)
+
+#else
+
+#define BATT_DEBUG(x...)
+
+#endif
 
 struct dec_level_by_current_ua {
 	int threshold_ua;
@@ -1150,8 +1158,11 @@ static void batt_check_overload(unsigned long time_since_last_update_ms)
 
 int batt_check_consistent(void)
 {
+#ifdef CONFIG_HTC_SPAM
 	struct timespec xtime = CURRENT_TIME;
+
 	unsigned long currtime_s = (xtime.tv_sec * MSEC_PER_SEC + xtime.tv_nsec / NSEC_PER_MSEC)/MSEC_PER_SEC;
+#endif
 
 	/* Restore battery data for keeping soc stable */
 	if (htc_batt_info.store.batt_stored_magic_num == STORE_MAGIC_NUM
@@ -2050,7 +2061,9 @@ static void htc_usb_overheat_routine(void)
 static void htc_usb_overheat_worker(struct work_struct *work)
 {
 	int usb_conn_temp = get_property(htc_batt_info.batt_psy, POWER_SUPPLY_PROP_USB_CONN_TEMP);
+#ifdef CONFIG_HTC_SPAM
 	unsigned int prev_state = g_htc_usb_overheat_check_state;
+#endif
 	bool b_sched_next = false;
 	static int s_polling_cnt = 0;
 	int batt_temp = get_property(htc_batt_info.batt_psy, POWER_SUPPLY_PROP_TEMP);
@@ -3342,7 +3355,9 @@ void htc_stats_update_charging_statistics(int latest, int prev)
     char time_str[25];
     long dischg_time = 0L;
     long chg_time = 0L;
+#ifdef CONFIG_HTC_SPAM
     char debug[10] = "[debug]";
+#endif
     bool debug_flag = false;
 
     if (debug_flag) {

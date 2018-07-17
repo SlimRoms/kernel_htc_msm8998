@@ -86,8 +86,13 @@
 #ifdef pr_info
 #undef pr_info
 #endif
+
+#ifdef CONFIG_HTC_SPAM
 #define pr_info(format, arg...) \
 		printk(KERN_INFO "[TP][I] " format "\n", ##arg)
+#else
+#define pr_info(format, arg...)
+#endif
 
 #ifdef pr_err
 #undef pr_err
@@ -97,8 +102,14 @@
 
 #ifdef dev_info
 #undef dev_info
+
+#ifdef CONFIG_HTC_SPAM
 #define dev_info(dev, format, arg...)		\
 	_dev_info(dev, "[TP][I] "format, ##arg)
+#else
+#define dev_info(dev, format, arg...)
+#endif
+
 #endif
 
 #if 0
@@ -111,8 +122,14 @@
 
 #ifdef dev_dbg
 #undef dev_dbg
+
+#ifdef CONFIG_HTC_SPAM
 #define dev_dbg(dev, format, arg...)		\
 	_dev_info(dev, "[TP][D] "format, ##arg)
+#else
+#define dev_dbg(dev, format, arg...)
+#endif
+
 #endif
 
 #define htc_dev_err(dev, format, arg...)		\

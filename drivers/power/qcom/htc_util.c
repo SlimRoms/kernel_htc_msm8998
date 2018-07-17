@@ -939,7 +939,9 @@ void htc_monitor_init(void)
 
 static int __init htc_cpu_monitor_init(void)
 {
+#ifdef CONFIG_HTC_SPAM
        htc_monitor_init();
+#endif
        return 0;
 }
 late_initcall(htc_cpu_monitor_init);

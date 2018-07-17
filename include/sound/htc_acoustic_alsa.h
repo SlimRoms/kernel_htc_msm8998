@@ -30,10 +30,15 @@
 			printk(KERN_ERR pr_aud_fmt(fmt), ##__VA_ARGS__)
 #define pr_aud_err1(fmt, ...) \
 			printk(KERN_ERR pr_aud_fmt1(fmt), ##__VA_ARGS__)
+#ifdef CONFIG_HTC_SPAM
 #define pr_aud_info(fmt, ...) \
 			printk(KERN_INFO pr_aud_fmt(fmt), ##__VA_ARGS__)
 #define pr_aud_info1(fmt, ...) \
 			printk(KERN_INFO pr_aud_fmt1(fmt), ##__VA_ARGS__)
+#else
+#define pr_aud_info(fmt, ...)
+#define pr_aud_info1(fmt, ...)
+#endif
 
 #if defined(CONFIG_DYNAMIC_DEBUG)
 #define pr_aud_debug(fmt, ...) \
@@ -49,8 +54,13 @@
 #undef pr_debug
 #undef pr_info
 #undef pr_err
+#ifdef CONFIG_HTC_SPAM
 #define pr_debug(fmt, ...) pr_aud_debug(fmt, ##__VA_ARGS__)
 #define pr_info(fmt, ...) pr_aud_info(fmt, ##__VA_ARGS__)
+#else
+#define pr_debug(fmt, ...)
+#define pr_info(fmt, ...)
+#endif
 #define pr_err(fmt, ...) pr_aud_err(fmt, ##__VA_ARGS__)
 
 #define ADM_MODULE_ONEDOTONE_AUDIO       0x10000135

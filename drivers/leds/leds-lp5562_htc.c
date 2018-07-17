@@ -32,7 +32,12 @@
 #include <linux/wakelock.h>
 
 #define LP5562_MAX_LEDS			9	/* Maximum number of LEDs */
-#define LED_DEBUG				1
+
+#ifdef CONFIG_HTC_SPAM
+#define LED_DEBUG	1
+#else
+#define LED_DEBUG	0
+#endif
 #if LED_DEBUG
 #define D(x...) printk(KERN_DEBUG "[LED]" x)
 #define I(x...) printk(KERN_INFO "[LED]" x)
