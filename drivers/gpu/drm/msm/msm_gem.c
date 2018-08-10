@@ -241,7 +241,6 @@ static struct page **get_pages(struct drm_gem_object *obj)
 		msm_obj->sgt = drm_prime_pages_to_sg(p, npages);
 		if (IS_ERR(msm_obj->sgt)) {
 			void *ptr = ERR_CAST(msm_obj->sgt);
-
 			msm_obj->sgt = NULL;
 			return ptr;
 		}

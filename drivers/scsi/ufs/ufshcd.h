@@ -931,6 +931,7 @@ struct ufs_hba {
 	 * CAUTION: Enabling this might reduce overall UFS throughput.
 	 */
 #define UFSHCD_CAP_INTR_AGGR (1 << 4)
+
 	/* Allow standalone Hibern8 enter on idle */
 #define UFSHCD_CAP_HIBERN8_ENTER_ON_IDLE (1 << 5)
 	/*
