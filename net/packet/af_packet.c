@@ -1690,7 +1690,7 @@ static int fanout_add(struct sock *sk, u16 id, u16 type_flags)
 		match->flags = flags;
 		INIT_LIST_HEAD(&match->list);
 		spin_lock_init(&match->lock);
-		refcount_set(&match->sk_ref, 0);
+		atomic_set(&match->sk_ref, 0);
 		fanout_init_data(match);
 		match->prot_hook.type = po->prot_hook.type;
 		match->prot_hook.dev = po->prot_hook.dev;
@@ -1707,10 +1707,10 @@ static int fanout_add(struct sock *sk, u16 id, u16 type_flags)
 	    match->prot_hook.type == po->prot_hook.type &&
 	    match->prot_hook.dev == po->prot_hook.dev) {
 		err = -ENOSPC;
-		if (refcount_read(&match->sk_ref) < PACKET_FANOUT_MAX) {
+		if (atomic_read(&match->sk_ref) < PACKET_FANOUT_MAX) {
 			__dev_remove_pack(&po->prot_hook);
 			po->fanout = match;
-			refcount_set(&match->sk_ref, refcount_read(&match->sk_ref) + 1);
+			atomic_inc(&match->sk_ref);
 			__fanout_link(sk, po);
 			err = 0;
 		}
@@ -1746,7 +1746,7 @@ static struct packet_fanout *fanout_release(struct sock *sk)
 	if (f) {
 		po->fanout = NULL;
 
-		if (refcount_dec_and_test(&f->sk_ref))
+		if (atomic_dec_and_test(&f->sk_ref))
 			list_del(&f->list);
 		else
 			f = NULL;
