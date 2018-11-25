@@ -385,12 +385,7 @@ ssize_t tcp_splice_read(struct socket *sk, loff_t *ppos,
 			struct pipe_inode_info *pipe, size_t len,
 			unsigned int flags);
 
-/* sysctl master controller */
-extern int tcp_use_userconfig_sysctl_handler(struct ctl_table *, int,
-				void __user *, size_t *, loff_t *);
-extern int tcp_proc_delayed_ack_control(struct ctl_table *, int,
-				void __user *, size_t *, loff_t *);
-
+void tcp_enter_quickack_mode(struct sock *sk);
 static inline void tcp_dec_quickack_mode(struct sock *sk,
 					 const unsigned int pkts)
 {
@@ -574,6 +569,7 @@ void tcp_send_fin(struct sock *sk);
 void tcp_send_active_reset(struct sock *sk, gfp_t priority);
 int tcp_send_synack(struct sock *);
 void tcp_push_one(struct sock *, unsigned int mss_now);
+void __tcp_send_ack(struct sock *sk, u32 rcv_nxt);
 void tcp_send_ack(struct sock *sk);
 void tcp_send_delayed_ack(struct sock *sk);
 void tcp_send_loss_probe(struct sock *sk);
