@@ -789,6 +789,10 @@ struct ath10k {
 
 	struct ath10k_hw_params hw_params;
 
+	const struct firmware *board;
+	const void *board_data;
+	size_t board_len;
+
 	/* contains the firmware images used with ATH10K_FIRMWARE_MODE_NORMAL */
 	struct ath10k_fw_components normal_mode_fw;
 
